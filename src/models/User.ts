@@ -21,6 +21,7 @@ const userSchema = new Schema<IUser>({
   isVerified: { type: Boolean, default: false },
   otp: { type: String },
   otpExpiry: { type: Date },
+  refreshToken: {type: String}
 }, {
   timestamps: true,
 });
