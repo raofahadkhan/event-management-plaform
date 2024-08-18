@@ -3,8 +3,8 @@
 // =======================================================================
 
 import express from "express";
-import { registerUser, sendOtp } from "../controllers/authControllers";
-
+import registerUser from "../controllers/auth/register";
+import sendOtp from "../controllers/auth/sendOtp";
 const router = express.Router();
 
 // =======================================================================
