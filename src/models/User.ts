@@ -1,3 +1,7 @@
+// =======================================================================
+// THIS FILE IS CONTAINING THE USER MODEL
+// =======================================================================
+
 import { Schema, model, Document } from 'mongoose';
 
 interface IUser extends Document {
