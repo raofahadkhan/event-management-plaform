@@ -22,8 +22,17 @@ const verifyUser = async (req: Request, res: Response) => {
     // =======================================================================
     
     const user = await User.findOne({ email });
+
     if (!user) {
       return res.status(404).json({ error: 'User with this email does not exist.' });
+    }
+
+    // =======================================================================
+    // CHECKING IS USER ALREADY VERIFIED
+    // =======================================================================
+
+    if (user.isVerified){
+      return res.status(400).json({ error: "User us already verified!"})
     }
 
     // =======================================================================
