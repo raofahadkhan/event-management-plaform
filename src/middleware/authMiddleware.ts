@@ -6,7 +6,7 @@ import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
 export interface AuthRequest extends Request {
-  user?: string;
+  userId: string;
 }
 
 export const isAuthenticated = (req: AuthRequest, res: Response, next: NextFunction) => {
@@ -24,9 +24,9 @@ export const isAuthenticated = (req: AuthRequest, res: Response, next: NextFunct
     // ==============================================================================
     // VERIFY THE ACCESS TOKEN IF VERIFIED THAN PASS THE USER_ID TO THE NEXT FUNCTION
     // ==============================================================================
-    
+
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { userId: string };
-    req.user = decoded.userId;
+    req.userId = decoded.userId;
 
     next();
   } catch (err) {
