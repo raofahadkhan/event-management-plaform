@@ -18,7 +18,7 @@ const transporter = nodemailer.createTransport({
   });
   
   // =======================================================================
-  // 2. THIS CONTROLLER IS RESPONSIBLE FOR SENDING OTP FOR USER VERIFICATION
+  // THIS CONTROLLER IS RESPONSIBLE FOR SENDING OTP FOR USER VERIFICATION
   // =======================================================================
   
   const sendOtp = async (req: Request, res: Response) => {
@@ -26,7 +26,7 @@ const transporter = nodemailer.createTransport({
       const { email } = req.body;
 
       // =======================================================================
-      // CHECKING IS REQUIRED DATA IS PASSED IN THE BODY
+      // 1. CHECKING IS REQUIRED DATA IS PASSED IN THE BODY
       // =======================================================================
 
       if (!email) {
@@ -34,7 +34,7 @@ const transporter = nodemailer.createTransport({
       }
   
       // =======================================================================
-      // CHECKING IF THE USER EXISTS IN DB
+      // 2. CHECKING IF THE USER EXISTS IN DB
       // =======================================================================
   
       const user = await User.findOne({ email });
@@ -43,7 +43,7 @@ const transporter = nodemailer.createTransport({
       }
   
       // =======================================================================
-      // GENERATING OTP AND ITS EXPIRY TIME AND SAVING IT TO THE DATABASE
+      // 3. GENERATING OTP AND ITS EXPIRY TIME AND SAVING IT TO THE DATABASE
       // =======================================================================
   
       const otp = generateOTP();
@@ -54,7 +54,7 @@ const transporter = nodemailer.createTransport({
       await user.save();
   
       // =======================================================================
-      // SENDING OTP IN EMAIL TO USER THROUGH NODE MAILER
+      // 4. SENDING OTP IN EMAIL TO USER THROUGH NODE MAILER
       // =======================================================================
   
       const mailOptions = {

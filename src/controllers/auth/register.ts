@@ -13,7 +13,7 @@ const registerUser = async (req: Request, res: Response) => {
     const { name, email, password } = req.body;
 
     // =======================================================================
-    // CHECKING IS REQUIRED DATA IS PASSED IN THE BODY
+    // 1. CHECKING IS REQUIRED DATA IS PASSED IN THE BODY
     // =======================================================================
 
     if (!name || !email || !password) {
@@ -21,7 +21,7 @@ const registerUser = async (req: Request, res: Response) => {
     }
 
     // =======================================================================
-    // CHECKING IS USER ALREADY EXISTS IN DATABASE 
+    // 2. CHECKING IS USER ALREADY EXISTS IN DATABASE 
     // =======================================================================
 
     const existingUser = await User.findOne({ email });
@@ -31,13 +31,13 @@ const registerUser = async (req: Request, res: Response) => {
     }
 
     // =======================================================================
-    // HASHING THE PASSWORD FOR ADDED SECURITY
+    // 3. HASHING THE PASSWORD FOR ADDED SECURITY
     // =======================================================================
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // =======================================================================
-    // CREATING OR SAVING THE USER IN THE DATABASE
+    // 4. CREATING OR SAVING THE USER IN THE DATABASE
     // =======================================================================
 
     const user = new User({
@@ -48,7 +48,7 @@ const registerUser = async (req: Request, res: Response) => {
     await user.save();
 
     // =======================================================================
-    // SENDING THE SUCCESS RESPONSE: USER REGISTERED SUCCESSFULLY
+    // 5. SENDING THE SUCCESS RESPONSE: USER REGISTERED SUCCESSFULLY
     // =======================================================================
 
     return res.status(201).json({ message: 'User registered successfully. Please verify your email.' });

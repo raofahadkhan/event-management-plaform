@@ -10,7 +10,7 @@ const verifyUser = async (req: Request, res: Response) => {
     const { email, otp } = req.body;
 
     // =======================================================================
-    // CHECKING IS REQUIRED DATA IS PASSED IN THE BODY
+    // 1. CHECKING IS REQUIRED DATA IS PASSED IN THE BODY
     // =======================================================================
 
     if (!email || !otp) {
@@ -18,7 +18,7 @@ const verifyUser = async (req: Request, res: Response) => {
     }
 
     // =======================================================================
-    // CHECKING IS USER EXIST IN DATABASE
+    // 2. CHECKING IS USER EXIST IN DATABASE
     // =======================================================================
     
     const user = await User.findOne({ email });
@@ -28,7 +28,7 @@ const verifyUser = async (req: Request, res: Response) => {
     }
 
     // =======================================================================
-    // CHECKING IS USER ALREADY VERIFIED
+    // 3. CHECKING IS USER ALREADY VERIFIED
     // =======================================================================
 
     if (user.isVerified){
@@ -36,16 +36,15 @@ const verifyUser = async (req: Request, res: Response) => {
     }
 
     // =======================================================================
-    // CHECKING THE OTP EXPIRY
+    // 4. CHECKING THE OTP EXPIRY
     // =======================================================================
 
-    // Check if the OTP is correct and not expired
     if (user.otp !== otp || !user.otpExpiry || user.otpExpiry < new Date()) {
       return res.status(400).json({ error: 'Invalid or expired OTP.' });
     }
 
     // =======================================================================
-    // MARKING THE USER AS VERIFIED AND DELETING THE OTP AND ITS EXPIRY TIME
+    // 5. MARKING THE USER AS VERIFIED AND DELETING THE OTP AND ITS EXPIRY TIME
     // =======================================================================
   
     user.isVerified = true;
