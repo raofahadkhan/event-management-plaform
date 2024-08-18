@@ -3,12 +3,11 @@
 // THIS FILE CONTAINS ALL OF THE CONTROLLERS FOR AUTH
 // =======================================================================
 
-import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
-import User from '../models/User';
-import nodemailer from 'nodemailer';
-import crypto from 'crypto';
 import dotenv from 'dotenv';
+import { Request, Response } from 'express';
+import nodemailer from 'nodemailer';
+import User from '../models/User';
 import generateOTP from '../utils/generateOtp';
 dotenv.config();
 
@@ -57,13 +56,6 @@ export const registerUser = async (req: Request, res: Response) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // =======================================================================
-    // GENERATING THE OTP FOR USER VERIFICATION AND SET THE EXPIRY TO 10 MINS
-    // =======================================================================
-
-    const otp = generateOTP();
-    const otpExpiry = new Date(Date.now() + 10 * 60 * 1000);
-
-    // =======================================================================
     // CREATING OR SAVING THE USER IN THE DATABASE
     // =======================================================================
 
@@ -71,29 +63,8 @@ export const registerUser = async (req: Request, res: Response) => {
       name,
       email,
       password: hashedPassword,
-      isVerified: false,
-      otp,
-      otpExpiry,
     });
     await user.save();
-
-    // =======================================================================
-    // SENDING OTP EMAIL TO USER
-    // =======================================================================
-
-    const mailOptions = {
-      from: process.env.GMAIL_USER,
-      to: email,
-      subject: 'Your OTP for Registration',
-      text: `Your OTP code is ${otp}. It is valid for 10 minutes.`,
-    };
-
-    await transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-          console.error('Error sending email:', error);
-          return res.status(500).json({ error: 'Error sending OTP email.' });
-        }
-    });
 
     // =======================================================================
     // SENDING THE SUCCESS RESPONSE: USER REGISTERED SUCCESSFULLY
