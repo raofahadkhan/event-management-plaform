@@ -5,6 +5,7 @@
 import express from "express";
 import registerUser from "../controllers/auth/register";
 import sendOtp from "../controllers/auth/sendOtp";
+import verifyUser from "../controllers/auth/verifyUser";
 const router = express.Router();
 
 // =======================================================================
@@ -18,5 +19,11 @@ router.post("/register", registerUser);
 // =======================================================================
 
 router.post("/send-otp", sendOtp)
+
+// =======================================================================
+// 3. VERIFY USER ROUTE
+// =======================================================================
+
+router.post("/verify-user", verifyUser)
 
 export default router;
