@@ -24,6 +24,14 @@ const transporter = nodemailer.createTransport({
   const sendOtp = async (req: Request, res: Response) => {
     try {
       const { email } = req.body;
+
+      // =======================================================================
+      // CHECKING IS REQUIRED DATA IS PASSED IN THE BODY
+      // =======================================================================
+
+      if (!email) {
+        return res.status(400).json({ error: 'email is required.' });
+      }
   
       // =======================================================================
       // CHECKING IF THE USER EXISTS IN DB
