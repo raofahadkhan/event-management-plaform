@@ -24,6 +24,7 @@ export const isAuthenticated = (req: AuthRequest, res: Response, next: NextFunct
     // ==============================================================================
     // VERIFY THE ACCESS TOKEN IF VERIFIED THAN PASS THE USER_ID TO THE NEXT FUNCTION
     // ==============================================================================
+    
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { userId: string };
     req.user = decoded.userId;
 
