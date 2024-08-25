@@ -10,14 +10,14 @@ dotenv.config();
 
 const registerUser = async (req: Request, res: Response) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, role } = req.body;
 
     // =======================================================================
     // 1. CHECKING IS REQUIRED DATA IS PASSED IN THE BODY
     // =======================================================================
 
-    if (!name || !email || !password) {
-      return res.status(400).json({ error: 'Name, email, and password are required.' });
+    if (!name || !email || !password || !role) {
+      return res.status(400).json({ error: 'Name, email, role and password are required.' });
     }
 
     // =======================================================================
@@ -44,6 +44,7 @@ const registerUser = async (req: Request, res: Response) => {
       name,
       email,
       password: hashedPassword,
+      role: role
     });
     await user.save();
 
