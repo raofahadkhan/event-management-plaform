@@ -64,10 +64,14 @@ const loginUser = async (req: Request, res: Response) => {
     await user.save();
 
     // =======================================================================
-    // 7. SENDING ACCESS TOKEN AND REFRESH TOKEN TO CLIENT
+    // 7. SENDING USER'S DATA WITH ACCESS TOKEN AND REFRESH TOKEN TO CLIENT
     // =======================================================================
+
+    const { _id: user_id, name, email: user_email, role} = user;
+
+    let user_response = { user_id, name, email: user_email, role }
     
-    return res.status(200).json({ accessToken, refreshToken });
+    return res.status(200).json({ user: user_response, accessToken, refreshToken });
   } catch (error) {
     return res.status(500).json({ error: 'Internal server error.' });
   }
