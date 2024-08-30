@@ -1,8 +1,11 @@
+"use client"
 import Input from "@/components/form/Input";
 import Label from "@/components/form/Label";
+import useRegister from "@/utils/hooks/auth/useRegister";
 import React from "react";
 
 const Page = () => {
+  const { register } = useRegister()
   return (
     <div className="flex flex-col justify-center items-center h-screen bg-[#F8F8FA] gap-3">
       <div className="flex flex-col text-center gap-2">
@@ -11,7 +14,10 @@ const Page = () => {
         </h1>
       </div>
       <div className="w-[90%] md:w-1/2 lg:w-1/3">
-        <form action="" className="flex flex-col gap-4">
+        <form onSubmit={async (e) => {
+          e.preventDefault()
+          await register("ashar", "ashar@gmail.com", "ashar.")
+        }} className="flex flex-col gap-4">
           <div className="flex flex-col gap-[10px]">
             <Label htmlFor="name" value="Name" />
             <Input name="name" type="text" placeholder="Enter your name" />
