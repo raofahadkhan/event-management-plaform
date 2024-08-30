@@ -37,7 +37,6 @@ const AuthProvider = (props: any) => {
     }
   }, [authState, initialized]);
 
-
   return (
     <authContext.Provider
       value={{
